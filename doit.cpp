@@ -20,7 +20,7 @@ long int convertToMilli(struct timeval t) {
 }
 
 // this prints out the stats
-void printStats(long int start, long int end) {
+void printStats(long int start) {
     struct rusage Rusage;
 
     getrusage(RUSAGE_CHILDREN, &Rusage);
@@ -29,6 +29,9 @@ void printStats(long int start, long int end) {
     long int userTime = convertToMilli(Rusage.ru_utime);
     long int systemTime = convertToMilli(Rusage.ru_stime);
 
+    struct timeval time2; //end
+    gettimeofday(&time2, NULL);
+    int end = convertToMilli(time2);
     // Wall Clock
     long int wallClock = end - start;
 
@@ -144,7 +147,8 @@ int main(int argc, char *argv[]) {
 
         if (val > 0) {
           cout << "[" << i + 1 << "] " << background.at(i).pid << " " << background.at(i).command << "[FINISHED]" << endl;
-          //cout << "FINISHED--------------------------------------------------------------------------------------------" << endl;
+          cout << background.at(i).command << " Stats" << endl;
+          printStats(background.at(i).startTime);
           background.erase(background.begin() + i);
         }
       }
@@ -209,7 +213,7 @@ int main(int argc, char *argv[]) {
 
       int pid;
       struct timeval time1; //start
-      struct timeval time2; //end
+
 
       gettimeofday(&time1, NULL);
       int start = convertToMilli(time1);
@@ -238,10 +242,9 @@ int main(int argc, char *argv[]) {
           int status1;
           waitpid(pid, &status1, 0);
 
-          gettimeofday(&time2, NULL);
-          int end = convertToMilli(time2);
 
-          printStats(start, end);
+
+          printStats(start);
         }
 
         // user requested command to be background
