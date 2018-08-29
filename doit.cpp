@@ -85,7 +85,6 @@ void parseInput(char *args[32], char input[128]) {
     cout << "Background was requested" << endl;
     excludedChars = " &";
   }
-
   else {
     excludedChars = " ";
   }
@@ -251,7 +250,13 @@ int main(int argc, char *argv[]) {
         else {
           //cout << "Background" << endl;
           int status;
-          processInfo p = {pid, tempCommand, start};
+          string stringCommand = "";
+
+          for (int i = 0; argvNew[i] != '\0'; i++) {
+            stringCommand += argvNew[i];
+          }
+
+          processInfo p = {pid, stringCommand, start};
 
           background.push_back(p);
           backgroundTemp.push_back(p);
