@@ -118,42 +118,44 @@ typedef struct {
   string command;
   long int startTime;
 } processInfo;
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[]) {
   char *argvNew[32]; // array to hold 32 arguments
   char userInput[128]; // array to hold 128 characters
   // waits for user to type in commands (no arguments)
   if (argc == 1) {
-    cout << "Welcome" << endl;
+    cout << "Entering into Mini-Shell" << endl;
     vector<processInfo> background;
-    vector<processInfo> backgroundTemp;
-    pid_t val;
+    //vector<processInfo> backgroundTemp;
+    string prompt = "==>";
     while (1) {
       processInfo temp;
       for (unsigned long i = 0; i < background.size(); i++) {
         int status;
         //cout << "Pid: " << background.at(i).pid << endl;
-        val = waitpid(-1, &status, WNOHANG);
+        pid_t val = waitpid(-1, &status, WNOHANG);
         //cout << "Val: " << val << endl;
         //cout << "Status: " << status << endl;
         if (val == 0) {
-
+          //Background is Running
         }
 
         if (val < 0) {
-
+          //There was an error
         }
 
         if (val > 0) {
-          cout << "[" << i + 1 << "] " << background.at(i).pid << " " << background.at(i).command << "[FINISHED]" << endl;
-          cout << background.at(i).command << " Stats" << endl;
+          cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+          cout << "[" << i + 1 << "] " << background.at(i).pid << " Completed" << endl;
+          cout << endl << background.at(i).command << " Stats";
           printStats(background.at(i).startTime);
+          cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
           background.erase(background.begin() + i);
         }
       }
 
       //cout << "Please enter a command into the shell" << endl;
-      cout << "==>";
+      cout << prompt;
       fgets(userInput, 128, stdin); // gets the user input
       //getline(cin, userInput);
 
@@ -165,8 +167,6 @@ int main(int argc, char *argv[]) {
 
       if (bg == 1) {
         tempCommand = string(userInput);
-        //tempCommand.pop_back();
-        //cout << "Background was requested" << endl;
         std::string command(userInput);
         char *newUserInput = new char[128];
         strcpy(newUserInput, command.c_str());
@@ -196,20 +196,37 @@ int main(int argc, char *argv[]) {
 
       }
 
-      if (strncmp(userInput, "cd", 2) == 0) {
+      else if (strncmp(userInput, "cd", 2) == 0) {
         chdir(argvNew[1]);
         //cout << argvNew[1] << endl;
         continue;
       }
 
-      if (strcmp(userInput, "jobs") == 0) {
+
+      else if (strcmp(userInput, "jobs") == 0) {
         for (unsigned int i = 0; i < background.size(); i++) {
           cout << "[" << i + 1 << "] " << background.at(i).pid << " " << background.at(i).command << endl;
 
         }
+        cout << endl;
         continue;
       }
 
+      string tempInput = string(userInput);
+      string setCommand = "set";
+      size_t found = tempInput.find(setCommand);
+      //cout << tempInput << endl;
+      if (found != std::string::npos) {
+        //cout << argvNew[3] << "hi" << endl;
+        prompt.assign(argvNew[3]);
+        //tempCommand = "";
+        continue;
+      }
+
+      else {
+        // do nothing
+      }
+      
       int pid;
       struct timeval time1; //start
 
@@ -226,8 +243,10 @@ int main(int argc, char *argv[]) {
       else if (pid == 0) {
         //cout << "In Child Process" << endl;
         //cout << "In the child process" << endl;
+
         if (execvp(argvNew[0], argvNew) < 0) {
           cerr << "Execvp Error!!!" << endl;
+          // Not working
           exit(1);
         }
       }
@@ -240,7 +259,7 @@ int main(int argc, char *argv[]) {
           //cout << pid << endl;
           int status1;
           waitpid(pid, &status1, 0);
-
+          //wait(0);
 
 
           printStats(start);
@@ -252,14 +271,17 @@ int main(int argc, char *argv[]) {
           int status;
           string stringCommand = "";
 
-          for (int i = 0; argvNew[i] != '\0'; i++) {
+          for (int i = 0; argvNew[i] != NULL; i++) {
             stringCommand += argvNew[i];
+            stringCommand += " ";
+            //cout << argvNew[i] << " " << endl;
           }
 
+          cout << stringCommand << endl;
           processInfo p = {pid, stringCommand, start};
 
           background.push_back(p);
-          backgroundTemp.push_back(p);
+          //backgroundTemp.push_back(p);
           unsigned long index = background.size();
           cout << "[" << index << "] " << background.at(index - 1).pid << endl;
         }
@@ -268,6 +290,36 @@ int main(int argc, char *argv[]) {
 
     }
 
+  }
+
+  else if (argc > 1) {
+    int pid;
+    //char *argvNew[32]; // array to hold 32 arguments
+    struct timeval time1;
+    gettimeofday(&time1, NULL);
+    long int start = convertToMilli(time1);
+
+    if ((pid = fork()) < 0) {
+      cerr << "Fork Error!!!" << endl;
+    }
+
+    else if (pid == 0) {
+      // in child process
+      for (int i = 0; i < argc; i++) {
+        // don't want doit command
+        argvNew[i] = argv[i + 1];
+      }
+
+      if (execvp(argvNew[0], argvNew) < 0) {
+        cerr << "Execvp Error!!!" << endl;
+        exit(1);
+      }
+    }
+
+    else {
+      wait(0);
+      printStats(start);
+    }
   }
 
   return 0;
