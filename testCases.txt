@@ -1,0 +1,355 @@
+Script started on Thu 30 Aug 2018 09:01:59 PM EDT
+bash-3.2$ ./doit wc foo.txt
+  1  23 136 foo.txt
+
+User CPU time used: 0 milliseconds
+System CPU time used: 0 milliseconds
+Wall Clock Time: 2 milliseconds
+Number of times the process was preempted involuntarily: 2
+Number of times the process gave up the CPU voluntarily: 4
+Number of major page faults: 0
+Number of minor page faults: 195
+Number of maximum resident set size used: 544
+
+bash-3.2$ ./doit cd dir
+
+User CPU time used: 0 milliseconds
+System CPU time used: 0 milliseconds
+Wall Clock Time: 1 milliseconds
+Number of times the process was preempted involuntarily: 0
+Number of times the process gave up the CPU voluntarily: 3
+Number of major page faults: 0
+Number of minor page faults: 115
+Number of maximum resident set size used: 540
+
+bash-3.2$ ./doit sleep 1 &
+[1] 4192
+bash-3.2$ 
+User CPU time used: 0 milliseconds
+System CPU time used: 0 milliseconds
+Wall Clock Time: 1002 milliseconds
+Number of times the process was preempted involuntarily: 1
+Number of times the process gave up the CPU voluntarily: 2
+Number of major page faults: 0
+Number of minor page faults: 191
+Number of maximum resident set size used: 536
+
+./doit sleep 2
+
+User CPU time used: 0 milliseconds
+System CPU time used: 0 milliseconds
+Wall Clock Time: 2002 milliseconds
+Number of times the process was preempted involuntarily: 1
+Number of times the process gave up the CPU voluntarily: 2
+Number of major page faults: 0
+Number of minor page faults: 192
+Number of maximum resident set size used: 536
+
+[1]+  Done                    ./doit sleep 1
+bash-3.2$ ./doit ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 0 milliseconds
+System CPU time used: 1 milliseconds
+Wall Clock Time: 3 milliseconds
+Number of times the process was preempted involuntarily: 2
+Number of times the process gave up the CPU voluntarily: 4
+Number of major page faults: 0
+Number of minor page faults: 287
+Number of maximum resident set size used: 856
+
+bash-3.2$ ./doit
+Welcome to Shell
+==>cat /etc/motd
+
+CCC Station - Authorized Use Only
+
+Mail all questions or problems to the address helpdesk@wpi.edu or use the
+help command to view the CCC Helpdesk web at http://www.wpi.edu/+CCC/Help.
+
+Please use the aup command to view the Acceptable Use Policy of the WPI
+network.
+
+This station is for interactive use.
+
+User CPU time used: 0 milliseconds
+System CPU time used: 0 milliseconds
+Wall Clock Time: 1 milliseconds
+Number of times the process was preempted involuntarily: 1
+Number of times the process gave up the CPU voluntarily: 1
+Number of major page faults: 0
+Number of minor page faults: 190
+Number of maximum resident set size used: 512
+
+==>cd dir
+==>ls -l
+total 3
+drwxrws--x 2 jdang jdang 0 Aug 30 20:58 foo
+drwxrws--x 2 jdang jdang 0 Aug 30 20:58 Something
+
+User CPU time used: 0 milliseconds
+System CPU time used: 2 milliseconds
+Wall Clock Time: 3 milliseconds
+Number of times the process was preempted involuntarily: 5
+Number of times the process gave up the CPU voluntarily: 7
+Number of major page faults: 0
+Number of minor page faults: 520
+Number of maximum resident set size used: 1004
+
+==>ls
+foo  Something
+
+User CPU time used: 0 milliseconds
+System CPU time used: 2 milliseconds
+Wall Clock Time: 1 milliseconds
+Number of times the process was preempted involuntarily: 7
+Number of times the process gave up the CPU voluntarily: 9
+Number of major page faults: 0
+Number of minor page faults: 810
+Number of maximum resident set size used: 1004
+
+==>cd ..
+==>ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 0 milliseconds
+System CPU time used: 2 milliseconds
+Wall Clock Time: 2 milliseconds
+Number of times the process was preempted involuntarily: 8
+Number of times the process gave up the CPU voluntarily: 11
+Number of major page faults: 0
+Number of minor page faults: 1100
+Number of maximum resident set size used: 1004
+
+==>set prompt = $
+$sleep 5
+
+User CPU time used: 0 milliseconds
+System CPU time used: 3 milliseconds
+Wall Clock Time: 5002 milliseconds
+Number of times the process was preempted involuntarily: 9
+Number of times the process gave up the CPU voluntarily: 13
+Number of major page faults: 0
+Number of minor page faults: 1295
+Number of maximum resident set size used: 1004
+
+$exit
+Exiting Shell
+bash-3.2$ ./doit
+Welcome to Shell
+==>slep e    sleep 5 &
+[1] 4242 sleep 5 & 
+==>cd
+==>ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 0 milliseconds
+System CPU time used: 1 milliseconds
+Wall Clock Time: 2 milliseconds
+Number of times the process was preempted involuntarily: 2
+Number of times the process gave up the CPU voluntarily: 3
+Number of major page faults: 0
+Number of minor page faults: 289
+Number of maximum resident set size used: 856
+
+==>cd
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[1] 4242 sleep Completed
+
+sleep 5 & Stats
+User CPU time used: 0 milliseconds
+System CPU time used: 2 milliseconds
+Wall Clock Time: 7308 milliseconds
+Number of times the process was preempted involuntarily: 4
+Number of times the process gave up the CPU voluntarily: 5
+Number of major page faults: 0
+Number of minor page faults: 482
+Number of maximum resident set size used: 856
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+==>sleep 10 &
+[1] 4244 sleep 10 & 
+==>sleep 5 &
+[2] 4245 sleep 5 & 
+==>cd  ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 0 milliseconds
+System CPU time used: 2 milliseconds
+Wall Clock Time: 2 milliseconds
+Number of times the process was preempted involuntarily: 6
+Number of times the process gave up the CPU voluntarily: 7
+Number of major page faults: 0
+Number of minor page faults: 771
+Number of maximum resident set size used: 856
+
+==>ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 0 milliseconds
+System CPU time used: 4 milliseconds
+Wall Clock Time: 2 milliseconds
+Number of times the process was preempted involuntarily: 8
+Number of times the process gave up the CPU voluntarily: 9
+Number of major page faults: 0
+Number of minor page faults: 1059
+Number of maximum resident set size used: 856
+
+==>ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 0 milliseconds
+System CPU time used: 5 milliseconds
+Wall Clock Time: 2 milliseconds
+Number of times the process was preempted involuntarily: 8
+Number of times the process gave up the CPU voluntarily: 12
+Number of major page faults: 0
+Number of minor page faults: 1349
+Number of maximum resident set size used: 860
+
+==>ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 0 milliseconds
+System CPU time used: 7 milliseconds
+Wall Clock Time: 3 milliseconds
+Number of times the process was preempted involuntarily: 10
+Number of times the process gave up the CPU voluntarily: 14
+Number of major page faults: 0
+Number of minor page faults: 1637
+Number of maximum resident set size used: 860
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[2] 4245 sleep Completed
+
+sleep 5 & Stats
+User CPU time used: 1 milliseconds
+System CPU time used: 7 milliseconds
+Wall Clock Time: 5590 milliseconds
+Number of times the process was preempted involuntarily: 11
+Number of times the process gave up the CPU voluntarily: 16
+Number of major page faults: 0
+Number of minor page faults: 1831
+Number of maximum resident set size used: 860
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+==>ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 1 milliseconds
+System CPU time used: 8 milliseconds
+Wall Clock Time: 1 milliseconds
+Number of times the process was preempted involuntarily: 13
+Number of times the process gave up the CPU voluntarily: 18
+Number of major page faults: 0
+Number of minor page faults: 2120
+Number of maximum resident set size used: 860
+
+==>ls
+dir  doit  doit.cpp  foo.txt  testCases.txt
+
+User CPU time used: 2 milliseconds
+System CPU time used: 8 milliseconds
+Wall Clock Time: 2 milliseconds
+Number of times the process was preempted involuntarily: 15
+Number of times the process gave up the CPU voluntarily: 20
+Number of major page faults: 0
+Number of minor page faults: 2409
+Number of maximum resident set size used: 860
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[1] 4244 sleep Completed
+
+sleep 10 & Stats
+User CPU time used: 2 milliseconds
+System CPU time used: 8 milliseconds
+Wall Clock Time: 11606 milliseconds
+Number of times the process was preempted involuntarily: 18
+Number of times the process gave up the CPU voluntarily: 22
+Number of major page faults: 0
+Number of minor page faults: 2603
+Number of maximum resident set size used: 860
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+==>sleep 10 &
+[1] 4254 sleep 10 & 
+==>sleep 5 15 &
+[2] 4259 sleep 15 & 
+==>sleep 20 &
+[3] 4278 sleep 20 & 
+==>jobs
+[1] 4254 sleep 10 &
+[2] 4259 sleep 15 &
+[3] 4278 sleep 20 &
+
+==>cd
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[1] 4254 sleep Completed
+
+sleep 10 & Stats
+User CPU time used: 2 milliseconds
+System CPU time used: 8 milliseconds
+Wall Clock Time: 27332 milliseconds
+Number of times the process was preempted involuntarily: 19
+Number of times the process gave up the CPU voluntarily: 24
+Number of major page faults: 0
+Number of minor page faults: 2796
+Number of maximum resident set size used: 860
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+==>cd
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[1] 4259 sleep Completed
+
+sleep 15 & Stats
+User CPU time used: 2 milliseconds
+System CPU time used: 9 milliseconds
+Wall Clock Time: 24230 milliseconds
+Number of times the process was preempted involuntarily: 22
+Number of times the process gave up the CPU voluntarily: 26
+Number of major page faults: 0
+Number of minor page faults: 2989
+Number of maximum resident set size used: 860
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+==>cd
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+[1] 4278 sleep Completed
+
+sleep 20 & Stats
+User CPU time used: 2 milliseconds
+System CPU time used: 10 milliseconds
+Wall Clock Time: 22487 milliseconds
+Number of times the process was preempted involuntarily: 25
+Number of times the process gave up the CPU voluntarily: 28
+Number of major page faults: 0
+Number of minor page faults: 3183
+Number of maximum resident set size used: 860
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+==>jobs
+
+==>sleep 10 &
+[1] 4296 sleep 10 & 
+==>ex  jobs
+[1] 4296 sleep 10 &
+
+==>exit
+Must wait for the background tasks to finish
+[1] 4296 sleep Completed
+
+User CPU time used: 2 milliseconds
+System CPU time used: 10 milliseconds
+Wall Clock Time: 10003 milliseconds
+Number of times the process was preempted involuntarily: 28
+Number of times the process gave up the CPU voluntarily: 30
+Number of major page faults: 0
+Number of minor page faults: 3376
+Number of maximum resident set size used: 860
+
+All the background tasks have been finished
+Exiting Shell
+bash-3.2$ exit
+exit
+
+Script done on Thu 30 Aug 2018 09:08:56 PM EDT
